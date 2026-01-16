@@ -1,0 +1,31 @@
+<h2>Login</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()" style="max-width: 360px;">
+  <div style="margin-bottom: 10px;">
+    <label>Email</label><br />
+    <input formControlName="email" type="email" style="width: 100%; padding: 8px;" />
+    <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" style="color: red;">
+      Enter a valid email.
+    </div>
+  </div>
+
+  <div style="margin-bottom: 10px;">
+    <label>Password</label><br />
+    <input formControlName="password" type="password" style="width: 100%; padding: 8px;" />
+    <div *ngIf="form.get('password')?.touched && form.get('password')?.invalid" style="color: red;">
+      Password is required.
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="form.invalid">Sign in</button>
+
+  <p *ngIf="error" style="color: red; margin-top: 10px;">{{ error }}</p>
+
+  <hr />
+  <p>Test users:</p>
+  <ul>
+    <li>clerk@recordshop.com / password</li>
+    <li>manager@recordshop.com / password</li>
+    <li>admin@recordshop.com / password</li>
+  </ul>
+</form>

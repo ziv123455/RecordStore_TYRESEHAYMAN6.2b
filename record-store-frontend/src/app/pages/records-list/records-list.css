@@ -1,0 +1,95 @@
+/* Page spacing */
+:host {
+  display: block;
+  padding: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Headings */
+h2 {
+  margin: 0 0 12px 0;
+}
+
+/* Controls row */
+label {
+  font-size: 12px;
+  color: #333;
+}
+
+input, select {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+}
+
+button {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: #f8f8f8;
+  cursor: pointer;
+}
+
+button:hover:enabled {
+  background: #efefef;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Links */
+a {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+thead th {
+  background: #111827;
+  color: white;
+  text-align: left;
+  font-weight: 600;
+  padding: 10px;
+  font-size: 14px;
+}
+
+tbody td {
+  padding: 10px;
+  border-top: 1px solid #eee;
+  font-size: 14px;
+}
+
+tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+tbody tr:hover {
+  background: #f3f4f6;
+}
+
+/* Export buttons */
+.export-bar {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}

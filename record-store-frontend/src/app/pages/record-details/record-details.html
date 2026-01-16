@@ -1,0 +1,55 @@
+<h2>Record Details</h2>
+
+<p><b>API:</b> {{ apiUrl }}/records/{{ id }}</p>
+
+<p *ngIf="loading">Loading...</p>
+
+<div *ngIf="error" style="color:red;">
+  <p>{{ error }}</p>
+  <button (click)="loadRecord()">Retry</button>
+
+  <p style="margin-top:10px;">
+    <a routerLink="/records">← Back to Records</a>
+  </p>
+</div>
+
+<div *ngIf="!loading && !error && record">
+  <!-- Built-in pipe requirement -->
+  <p><b>Title:</b> {{ record.title | lowercase }}</p>
+
+  <p><b>Artist:</b> {{ record.artist }}</p>
+  <p><b>Genre:</b> {{ record.genre }}</p>
+  <p><b>Format:</b> {{ record.format }}</p>
+  <p><b>Release Year:</b> {{ record.releaseYear }}</p>
+  <p><b>Price:</b> {{ record.price }}</p>
+
+  <p><b>Stock Qty:</b> {{ record.stockQty }}</p>
+
+  <!-- Custom pipe requirement -->
+  <p><b>Stock Status:</b> {{ record.stockQty | stockStatus }}</p>
+
+  <hr />
+
+  <div style="display:flex; gap:12px; align-items:center; margin: 10px 0;">
+    <a routerLink="/records">← Back</a>
+
+    <a *ngIf="canEdit" [routerLink]="['/records', record.id, 'edit']">Edit</a>
+
+    <button *ngIf="canDelete" (click)="deleteRecord()">Delete</button>
+
+    <span *ngIf="!canEdit && !canDelete" style="color:#666;">
+      (No edit/delete permissions for your role)
+    </span>
+  </div>
+
+  <hr />
+
+  <p><b>Customer Info (if assigned)</b></p>
+  <p><b>Customer ID:</b> {{ record.customerId || '-' }}</p>
+  <p><b>Customer Name:</b> {{ (record.customerFirstName || '') + ' ' + (record.customerLastName || '') }}</p>
+  <p><b>Customer Contact:</b> {{ record.customerContact || '-' }}</p>
+  <p><b>Customer Email:</b> {{ record.customerEmail || '-' }}</p>
+
+  <hr />
+  <a routerLink="/records">← Back to Records</a>
+</div>

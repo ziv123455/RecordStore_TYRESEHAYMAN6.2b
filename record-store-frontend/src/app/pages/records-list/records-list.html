@@ -1,0 +1,98 @@
+<h2>Records</h2>
+
+<p>
+  <a routerLink="/records/new">+ Add Record</a>
+</p>
+
+<div style="display:flex; gap:12px; align-items:center; margin: 12px 0; flex-wrap: wrap;">
+  <div>
+    <label>Search:</label><br />
+    <input
+      [(ngModel)]="search"
+      (input)="applyFilters()"
+      placeholder="id / customer id / last name / format / genre..."
+      style="padding: 8px; width: 320px;"
+    />
+    <button (click)="clearSearch()" style="margin-left: 6px;">Clear</button>
+  </div>
+
+  <div>
+    <label>Sort:</label><br />
+    <select [(ngModel)]="sort" (change)="applyFilters()" style="padding: 8px;">
+      <option value="id-asc">Id (Low → High)</option>
+      <option value="id-desc">Id (High → Low)</option>
+
+      <option value="lastname-asc">Customer Last Name (A → Z)</option>
+      <option value="lastname-desc">Customer Last Name (Z → A)</option>
+
+      <option value="format-asc">Format (A → Z)</option>
+      <option value="format-desc">Format (Z → A)</option>
+
+      <option value="genre-asc">Genre (A → Z)</option>
+      <option value="genre-desc">Genre (Z → A)</option>
+    </select>
+  </div>
+
+  <div style="margin-top: 18px; color:#555;">
+    Showing <b>{{ viewRecords.length }}</b> of <b>{{ records.length }}</b>
+  </div>
+</div>
+
+<p *ngIf="loading">Loading...</p>
+
+<div *ngIf="error" style="color:red;">
+  <p>{{ error }}</p>
+  <button (click)="loadRecords()">Retry</button>
+</div>
+
+<div *ngIf="!loading && !error" class="export-bar">
+  <button (click)="exportExcel()" [disabled]="!viewRecords.length">Export Excel</button>
+  <button (click)="exportPdf()" [disabled]="!viewRecords.length">Export PDF</button>
+</div>
+
+<table *ngIf="!loading && !error" border="1" cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Customer ID</th>
+      <th>Customer Last Name</th>
+      <th>Format</th>
+      <th>Genre</th>
+      <th>Buttons</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let r of viewRecords">
+      <td>{{ r.id }}</td>
+      <td>{{ r.customerId || '-' }}</td>
+      <td>{{ r.customerLastName || '-' }}</td>
+      <td>{{ r.format }}</td>
+      <td>{{ r.genre }}</td>
+
+      <td style="white-space:nowrap;">
+        <a [routerLink]="['/records', r.id]">View</a>
+
+        <span> | </span>
+
+        <a
+          [routerLink]="['/records', r.id, 'edit']"
+          [style.pointer-events]="canUpdate ? 'auto' : 'none'"
+          [style.opacity]="canUpdate ? '1' : '0.4'"
+        >
+          Update
+        </a>
+
+        <span> | </span>
+
+        <button
+          (click)="deleteFromList(r.id, r.title)"
+          [disabled]="!canDelete"
+          [style.opacity]="canDelete ? '1' : '0.4'"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

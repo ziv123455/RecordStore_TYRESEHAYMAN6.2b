@@ -1,0 +1,14 @@
+<nav style="padding: 12px; border-bottom: 1px solid #ddd; display:flex; gap:12px; align-items:center;">
+  <a routerLink="/records">Records</a>
+
+  <a routerLink="/login" *ngIf="!user">Login</a>
+
+  <span style="margin-left:auto;" *ngIf="user">
+    Logged in as: <b>{{ user.email }}</b> ({{ user.role }})
+    <button (click)="logout()" style="margin-left:10px;">Logout</button>
+  </span>
+</nav>
+
+<div style="padding: 16px;">
+  <router-outlet></router-outlet>
+</div>

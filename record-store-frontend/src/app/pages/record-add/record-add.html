@@ -1,0 +1,102 @@
+<h2>Add Record</h2>
+
+<p><a routerLink="/records">← Back to Records</a></p>
+
+<p *ngIf="error" style="color:red;">{{ error }}</p>
+
+<p *ngIf="loadingOptions">Loading formats/genres...</p>
+
+<form [formGroup]="form" (ngSubmit)="submit()" style="max-width: 520px;">
+  <fieldset style="padding: 12px;">
+    <legend>Record Info</legend>
+
+    <label>Title</label><br />
+    <input formControlName="title" style="width: 100%; padding: 8px;" />
+    <div *ngIf="showError('title')" style="color:red;">Title is required.</div>
+    <br /><br />
+
+    <label>Artist</label><br />
+    <input formControlName="artist" style="width: 100%; padding: 8px;" />
+    <div *ngIf="showError('artist')" style="color:red;">Artist is required.</div>
+    <br /><br />
+
+    <label>Genre</label><br />
+    <select formControlName="genre" style="width: 100%; padding: 8px;">
+      <option value="">-- Select Genre --</option>
+      <option *ngFor="let g of genres" [value]="g">{{ g }}</option>
+    </select>
+    <div *ngIf="showError('genre')" style="color:red;">Genre is required.</div>
+    <br /><br />
+
+    <label>Format</label><br />
+    <select formControlName="format" style="width: 100%; padding: 8px;">
+      <option value="">-- Select Format --</option>
+      <option *ngFor="let f of formats" [value]="f">{{ f }}</option>
+    </select>
+    <div *ngIf="showError('format')" style="color:red;">Format is required.</div>
+    <br /><br />
+
+    <label>Release Year</label><br />
+    <input formControlName="releaseYear" style="width: 100%; padding: 8px;" />
+    <div *ngIf="showError('releaseYear')" style="color:red;">Release Year is required.</div>
+    <br /><br />
+
+    <label>Price</label><br />
+    <input formControlName="price" style="width: 100%; padding: 8px;" />
+    <div *ngIf="showError('price')" style="color:red;">Price is required.</div>
+    <br /><br />
+
+    <label>Stock Qty</label><br />
+    <input formControlName="stockQty" style="width: 100%; padding: 8px;" />
+    <div *ngIf="showError('stockQty')" style="color:red;">Stock Qty is required.</div>
+  </fieldset>
+
+  <br />
+
+  <fieldset style="padding: 12px;">
+    <legend>Customer Info</legend>
+
+    <label>Customer ID (digits + letter, e.g. 1234567A)</label><br />
+    <input formControlName="customerId" style="width: 100%; padding: 8px;" />
+    <div *ngIf="showError('customerId')" style="color:red;">
+      <span *ngIf="c('customerId')?.errors?.['required']">Customer ID is required.</span>
+      <span *ngIf="c('customerId')?.errors?.['customerIdPattern']">
+        Customer ID must be numbers ending with one letter (e.g. 1234567A).
+      </span>
+    </div>
+    <br /><br />
+
+    <label>Customer First Name</label><br />
+    <input formControlName="customerFirstName" style="width: 100%; padding: 8px;" />
+    <div *ngIf="showError('customerFirstName')" style="color:red;">First name is required.</div>
+    <br /><br />
+
+    <label>Customer Last Name</label><br />
+    <input formControlName="customerLastName" style="width: 100%; padding: 8px;" />
+    <div *ngIf="showError('customerLastName')" style="color:red;">Last name is required.</div>
+    <br /><br />
+
+    <label>Customer Contact (numeric, min 8 digits)</label><br />
+    <input formControlName="customerContact" style="width: 100%; padding: 8px;" />
+    <div *ngIf="showError('customerContact')" style="color:red;">
+      <span *ngIf="c('customerContact')?.errors?.['required']">Contact is required.</span>
+      <span *ngIf="c('customerContact')?.errors?.['contactInvalid']">
+        Contact must be numeric and at least 8 digits.
+      </span>
+    </div>
+    <br /><br />
+
+    <label>Customer Email</label><br />
+    <input formControlName="customerEmail" style="width: 100%; padding: 8px;" />
+    <div *ngIf="showError('customerEmail')" style="color:red;">
+      <span *ngIf="c('customerEmail')?.errors?.['required']">Email is required.</span>
+      <span *ngIf="c('customerEmail')?.errors?.['email']">Enter a valid email.</span>
+    </div>
+  </fieldset>
+
+  <br />
+
+  <button type="submit" [disabled]="saving || loadingOptions">
+    {{ saving ? 'Saving...' : 'Add Record' }}
+  </button>
+</form>
